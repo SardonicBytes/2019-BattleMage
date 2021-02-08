@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class AIBrain : MonoBehaviour
 {
-    public Controller controller;
+    public WGController controller;
     public AIPath aiPath;
     public AIDestinationSetter aiDestinationSetter;
     public Seeker seeker;
@@ -19,7 +19,7 @@ public class AIBrain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        controller = GetComponent<Controller>();
+        controller = GetComponent<WGController>();
         aiPath = GetComponent<AIPath>();
         aiDestinationSetter = GetComponent<AIDestinationSetter>();
         seeker = GetComponent<Seeker>();

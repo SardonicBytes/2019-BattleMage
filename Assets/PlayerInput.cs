@@ -4,47 +4,16 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public Transform phBanner;
-    public Controller controller;
-    public BannerInteraction bannerInteraction;
-    public float bannerPickUpDistance = 1f;
-
-    public bool controlled = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        controller = GetComponent<Controller>(); ;
-        bannerInteraction = GetComponent<BannerInteraction>();
+    public Vector2 LeftStick {
+        get { return leftStick; }
+//        private set { leftStick = value; }
     }
+    private Vector2 leftStick;
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha0)){
-            controlled = !controlled;
-        }
-        if (!controlled) return;
-
-        Camera.main.transform.position = transform.position + new Vector3(0,0,-5);
-
-
-        Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        if (input.sqrMagnitude > 1)
-            input.Normalize();
-        controller.input = input;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Vector3.Distance(transform.position, phBanner.position) < bannerPickUpDistance)
-            {
-                bannerInteraction.ToggleBanner();
-            }
-            else
-            {
-                controller.Attack();
-            }
-        }
-
+        leftStick.x = Input.GetAxisRaw("Horizontal");
+        leftStick.y = Input.GetAxisRaw("Vertical");
     }
 }

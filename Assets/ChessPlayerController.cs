@@ -6,63 +6,33 @@ using UnityEngine.AI;
 public class ChessPlayerController : MonoBehaviour
 {
 
-
     public SpriteRenderer spriteRenderer;
     public Animator anim;
     public Rigidbody2D rb;
-    public MovementController movementController;
-
-    public float MoveSpeed;
 
     private Vector2 faceDirection;
-    public Vector2 input;
-    private Vector2 moveDirection;
-
-    
+    public bool isPlayer = true;
+    public bool takeInput = true;
 
 
     // Start is called before the first frame update
     void Start()
     {
-
         if (!CheckForComponents())
             return;
-        
-
+        if (!isPlayer)
+            takeInput = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        HandleFacing(); ;
-        Movement();
-
-    }
-
-    void Movement()
+    public void HandleFacing( Vector2 newFacingDirection )
     {
         // If we're not really giving it any input
-        if (input.SqrMagnitude() < 0.05f)
-        {
-            CCMove(Vector2.zero);
-            anim.SetFloat("Speed", 0);
-            return;
-        }
-        moveDirection = input;
-        CCMove(moveDirection * MoveSpeed);
-        anim.SetFloat("Speed", 1);
-    }
-
-    void HandleFacing()
-    {
-        // If we're not really giving it any input
-        if (moveDirection.SqrMagnitude() < 0.05f)
+        if (newFacingDirection.SqrMagnitude() < 0.05f)
         {
             return;
         }
-        spriteRenderer.flipX = moveDirection.x > 0f ? false : true;
-        anim.SetFloat("yMovement", moveDirection.y);
+        spriteRenderer.flipX = newFacingDirection.x > 0f ? false : true;
+        anim.SetFloat("yMovement", newFacingDirection.y);
     }
 
     //Check to ensure we have all required components, Add them if we can, if not return error.
@@ -86,9 +56,9 @@ public class ChessPlayerController : MonoBehaviour
         else return true;
     }
 
-    void CCMove(Vector2 Movement) {
-        Vector3 v3Movement = new Vector3 (Movement.x ,Movement.y ,0f);
-        rb.velocity = v3Movement;
+    public void BasicMove( Vector2 movement )
+    {
+        rb.velocity = movement;
     }
 
 }
