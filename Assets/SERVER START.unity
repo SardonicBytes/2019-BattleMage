@@ -1531,7 +1531,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   errorPanel: {fileID: 1360033370}
-  randomNicknames: []
+  randomNicknames:
+  - Tom
+  - BingBong
+  - Moople
 --- !u!1 &1093583069
 GameObject:
   m_ObjectHideFlags: 0
@@ -3262,11 +3265,22 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1751596708}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1003983453}
+        m_MethodName: DebugGetGameList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1751596708
 MonoBehaviour:
   m_ObjectHideFlags: 0

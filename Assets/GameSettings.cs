@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameSettings
 {
-    public int roomID;
+    public string roomID;
     public int numberOfPlayers;
     public bool publicRoom;
     public bool teamGame;

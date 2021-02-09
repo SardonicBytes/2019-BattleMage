@@ -23,7 +23,7 @@ public class GameLobby : MonoBehaviour
     void Start()
     {
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        allGameRooms = new GameSettings[0];
+
     }
 
     //Change when we have a game Setup Screen
@@ -48,6 +48,12 @@ public class GameLobby : MonoBehaviour
     private IEnumerator IQuickJoin()
     {
         yield return IGetGamesList();
+
+        if (allGameRooms == null)
+            Debug.Log("allGameRooms Not Initialized");
+        else
+            Debug.Log("It was but something else happened");
+
         if (allGameRooms.Length != 0)
         {
             yield return IJoinGame(allGameRooms[0].roomID);
@@ -75,7 +81,7 @@ public class GameLobby : MonoBehaviour
     //Ask the server to create a new room.
     private IEnumerator IRequestNewGameRoom ()
     {
-        Debug.Log(34);
+
         string gameSettingsParsed = gameSettings.Parse();
 
         WWWForm form = new WWWForm();
@@ -94,42 +100,50 @@ public class GameLobby : MonoBehaviour
             //Parse: Expected Format "Game Created*GameID"
             string[] returnParse = www.downloadHandler.text.Split('*');
             GameCreated( int.Parse(returnParse[1]));
+            
         }
     }
 
     //Get List of games from the server
     private IEnumerator IGetGamesList()
     {
-        WWWForm form = new WWWForm();
 
-        UnityWebRequest www = UnityWebRequest.Post("http://localhost/battlemage/GetGamesList.php", form);
+        UnityWebRequest www = UnityWebRequest.Get("http://localhost/battlemage/GetGamesList.php");
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
         {
             Debug.LogError("Error" + www.error);
         }
-        else if (www.downloadHandler.text.Contains("Exception"))
+        else if (www.downloadHandler.text.Contains("List Of Games:"))
         {
-            Debug.LogError(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
+            string[] returnParse = www.downloadHandler.text.Split('*');
+
+            GameSettings[] newGameRooms = new GameSettings[returnParse.Length-1];
+            for (int i = 0; i < newGameRooms.Length; i++)
+            {
+                newGameRooms[i] = new GameSettings();
+
+                newGameRooms[i].roomID = returnParse[i + 1];
+            }
+            allGameRooms = newGameRooms;
         }
         else
         {
-            Debug.Log("List Of Games: " + www.downloadHandler.text);
-
-            //Parse Games List to GameSettings
+            Debug.LogError(www.downloadHandler.text);
         }
     }
 
     //Once we have our gameID that we want to join, Join that game.
-    private IEnumerator IJoinGame(int newGameRoom)
+    private IEnumerator IJoinGame(string newGameRoom)
     {
 
         if (!VerifyNickname(nickname))
             nickname = RandomNickname();
 
         WWWForm form = new WWWForm();
-        form.AddField("Username", nickname);
+        form.AddField("Username", networkManager.username);
         form.AddField("Nickname", nickname);
         form.AddField("gameID", newGameRoom);
 
@@ -138,12 +152,16 @@ public class GameLobby : MonoBehaviour
 
         if (www.isNetworkError || www.isHttpError)
         {
-            Debug.LogError("Error" + www.error);
+            Debug.LogError(www.error);
 
         }
         else if (www.downloadHandler.text.Contains("Joined Game"))
         {
             GameJoined();
+        }
+        else
+        {
+            Debug.LogError(www.error);
         }
     }
 
@@ -170,6 +188,8 @@ public class GameLobby : MonoBehaviour
     //Verify that the username given meets minimum requirements
     bool VerifyNickname(string nameToCheck)
     {
+        if (nameToCheck == null)
+            return false;
         if (nameToCheck.Length < 3)
         {
             return false;
@@ -194,8 +214,13 @@ public class GameLobby : MonoBehaviour
 
         string newNickname = randomNicknames[Random.Range(0, randomNicknames.Length - 1)];
 
-
         return newNickname;
     }
+
+    public void DebugGetGameList()
+    {
+        StartCoroutine(IGetGamesList());
+    }
+
 
 }
