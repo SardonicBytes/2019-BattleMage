@@ -47,12 +47,9 @@ public class GameLobby : MonoBehaviour
     //Joins the first game that it finds.
     private IEnumerator IQuickJoin()
     {
-        yield return IGetGamesList();
 
-        if (allGameRooms == null)
-            Debug.Log("allGameRooms Not Initialized");
-        else
-            Debug.Log("It was but something else happened");
+
+        yield return IGetGamesList();
 
         if (allGameRooms.Length != 0)
         {
@@ -99,7 +96,8 @@ public class GameLobby : MonoBehaviour
         else if (www.downloadHandler.text.Contains("Game Created")){
             //Parse: Expected Format "Game Created*GameID"
             string[] returnParse = www.downloadHandler.text.Split('*');
-            GameCreated( int.Parse(returnParse[1]));
+            StartCoroutine(IJoinGame(returnParse[1]));
+            GameCreated( returnParse[1]);
             
         }
     }
@@ -138,7 +136,7 @@ public class GameLobby : MonoBehaviour
     //Once we have our gameID that we want to join, Join that game.
     private IEnumerator IJoinGame(string newGameRoom)
     {
-
+        Debug.Log("join");
         if (!VerifyNickname(nickname))
             nickname = RandomNickname();
 
@@ -166,9 +164,9 @@ public class GameLobby : MonoBehaviour
     }
 
     //Server says game was Created. Do Client stuff. This function might be better removed
-    void GameCreated( int newGameID )
+    void GameCreated( string newGameRoomName )
     {
-        Debug.Log("Game Created.  Room name is GameRoom" + newGameID + ".");
+        Debug.Log("Game Created.  Room name is " + newGameRoomName + ".");
     }
 
     //Game joined. Time to change scenes and load the lobby
