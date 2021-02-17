@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class ChessPlayerController : MonoBehaviour
 {
-
+    public Vector2 facingDirection;
     public SpriteRenderer spriteRenderer;
     public Animator anim;
     public Rigidbody2D rb;
@@ -20,17 +20,32 @@ public class ChessPlayerController : MonoBehaviour
     {
         if (!CheckForComponents())
             return;
-        if (!isPlayer)
-            takeInput = false;
+
+        takeInput = isPlayer;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            takeInput = !takeInput;
+            isPlayer = !isPlayer;
+        }
+        if (!takeInput)
+        {
+            BasicMove(Vector2.zero);
+        }
     }
 
     public void HandleFacing( Vector2 newFacingDirection )
     {
+
         // If we're not really giving it any input
         if (newFacingDirection.SqrMagnitude() < 0.05f)
         {
             return;
         }
+        facingDirection = newFacingDirection;
         spriteRenderer.flipX = newFacingDirection.x > 0f ? false : true;
         anim.SetFloat("yMovement", newFacingDirection.y);
     }

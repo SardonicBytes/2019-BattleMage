@@ -37,7 +37,8 @@ public class MovementController : MonoBehaviour
     {
         if(!chessPlayerController)
             chessPlayerController = GetComponent<ChessPlayerController>();
-        if (!playerInput && chessPlayerController.isPlayer)
+        //if (!playerInput && chessPlayerController.isPlayer)
+
             playerInput = GetComponent<PlayerInput>();
         if (!anim)
             anim = GetComponentInChildren<Animator>();
@@ -53,11 +54,15 @@ public class MovementController : MonoBehaviour
 
     private void Update()
     {
-        if(chessPlayerController.takeInput)
-            HandlePlayerMovement();
+        Animate();
+        if (!chessPlayerController.takeInput){
+            return;
+        }
+
+        HandlePlayerMovement();
 
         chessPlayerController.HandleFacing(moveDir);
-        Animate();
+
     }
 
     //Only called by direct controlled player Characters
@@ -131,7 +136,7 @@ public class MovementController : MonoBehaviour
     {
         float animSpeed = moveDir.sqrMagnitude < 0.2f ? 0 : 1;
         anim.SetFloat("Speed", animSpeed);
-
     }
 
 }
+

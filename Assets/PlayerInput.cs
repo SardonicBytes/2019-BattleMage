@@ -6,7 +6,6 @@ public class PlayerInput : MonoBehaviour
 {
     public Vector2 LeftStick {
         get { return leftStick; }
-//        private set { leftStick = value; }
     }
     private Vector2 leftStick;
 

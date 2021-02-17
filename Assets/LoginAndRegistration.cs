@@ -25,11 +25,6 @@ public class LoginAndRegistration : MonoBehaviour
 
     private NetworkManager networkManager;
 
-
-    float serverCheckRate = 2f;
-    int maximumAttempts = 10;
-
-
     bool serverConnected = false;
     public bool playOffline = false;
     string username;

@@ -11,7 +11,7 @@ public class AIBrain : MonoBehaviour
     public Seeker seeker;
     public Transform banner;
     bool inFormationLastframe;
-    private bool inFormation;
+    //private bool inFormation;
 
     public float maxDistanceFromFormation = 2f;
     public float graceDistance = 1f;
@@ -35,7 +35,7 @@ public class AIBrain : MonoBehaviour
 
         controller.input = aiPath.velocity;
 
-        inFormationLastframe = inFormation;
+        //inFormationLastframe = inFormation;
         float distance = Vector3.Distance(transform.position, banner.position);
 
         if (distance > maxDistanceFromFormation + graceDistance)
