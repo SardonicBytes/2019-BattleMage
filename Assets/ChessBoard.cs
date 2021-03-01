@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChessPiece : MonoBehaviour
+public static class ChessBoard
 {
+
 
     private static Vector2Int StepNorth;
     private static Vector2Int StepNorthEast;
@@ -16,36 +17,40 @@ public class ChessPiece : MonoBehaviour
 
 
 
-    public virtual List<Vector2Int> GetLegalMoves( Vector2Int startLocation, Square[,] square) {
+    public static List<Vector2Int> GetLegalMoves(Vector2Int startLocation, Square[,] square)
+    {
         List<Vector2Int> AllowedMoves = new List<Vector2Int>();
         return AllowedMoves;
     }
 
 
-    private List<Vector2Int> GetAdjacent(Vector2Int startLocation, Square[,] square) {
+    private static List<Vector2Int> GetAdjacent(Vector2Int startLocation, board boardState)
+    {
         List<Vector2Int> AllowedMoves = new List<Vector2Int>();
         Vector2Int currentPosition = startLocation;
         //Check North
-        while (true) {
+        while (true)
+        {
             currentPosition += StepNorth;
-            if () {
+            if (true)
+            {
                 AllowedMoves.Add(currentPosition);
             }
         }
         //Check East
         while (true)
         {
-
+            break;
         }
         //Check South
         while (true)
         {
-
+            break;
         }
         //Check West
         while (true)
         {
-
+            break;
         }
         //Check location if it is empty.
 
@@ -57,17 +62,10 @@ public class ChessPiece : MonoBehaviour
         return AllowedMoves;
     }
 
-
-    private List<Vector2Int> TrimToBoard(Vector2Int startLocation, Square[,] square) {
-        List<Vector2Int> AllowedMoves = new List<Vector2Int>();
-        return AllowedMoves;
-    }
-
-    private List<Vector2Int> GetDiagonals(Vector2Int startLocation, Square[,] square)
+    private static List<Vector2Int> GetDiagonals(Vector2Int startLocation, Square[,] square)
     {
         List<Vector2Int> AllowedMoves = new List<Vector2Int>();
         return AllowedMoves;
     }
-
 
 }

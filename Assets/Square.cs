@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Square
-{
+{ 
     public enum HighlightType { Normal, MoveAvailable, CaptureAvailable };
 
     public GameObject gameObj;
@@ -39,7 +39,7 @@ public class Square
 
     public void SetColour(HighlightType type)
     {
-        Color newColour = Color.magenta;
+        Color newColour = Color.magenta; //If see Magenta: cry
         switch (type)
         {
             case HighlightType.Normal:
