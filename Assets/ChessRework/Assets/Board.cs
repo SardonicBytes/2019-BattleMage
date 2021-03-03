@@ -22,7 +22,7 @@ public class Board
 
         if (boardState[startIndex.x, startIndex.y].spellEffect != null)
         {   
-            if (boardState[startIndex.x, startIndex.y].spellEffect.MoveThisPiece(startIndex))
+            if (boardState[startIndex.x, startIndex.y].spellEffect.MoveThisPiece(startIndex,endIndex))
             {
                 return;
             }
@@ -45,6 +45,19 @@ public class Board
         GameObject.Destroy(pieceToCapture);
         MovePiece(startIndex, endIndex);
 
+    }
+
+    public void MoveSpellEffect(Vector2Int startIndex, Vector2Int endIndex)
+    {
+        SpellEffect spellToMove = boardState[startIndex.x, startIndex.y].spellEffect;
+        boardState[endIndex.x, endIndex.y].spellEffect = spellToMove;
+        boardState[startIndex.x, startIndex.y].spellEffect = null;
+        spellToMove.UpdateIndex(this, endIndex);
+    }
+
+    public static Vector3 V2ToWorld ( Vector2Int inputV2 )
+    {
+        return new Vector3(inputV2.x ,inputV2.y,0);
     }
 
     public Board(int size)

@@ -14,7 +14,9 @@ public class ObjectPickup : MonoBehaviour
             }
             else
             {
-                return FindObjectOfType<Board>();
+                //#Rework
+                //return FindObjectOfType<Board>();
+                return null;
             }
         }
         set { activeBoard = value; }
@@ -115,7 +117,9 @@ public class ObjectPickup : MonoBehaviour
             return;
         }
         Vector3 placeLocation = transform.position + (MathTools.V2ToV3(chessPlayerController.facingDirection.normalized) * holdOffset / 2);
-        placeLocation = FindObjectOfType<Board>().Quantize(placeLocation);
+
+        //#Rework
+        //placeLocation = FindObjectOfType<Board>().Quantize(placeLocation);
         StartCoroutine(IMoveSmoothly(heldObject.transform, placeLocation)); 
         heldObject = null;
 

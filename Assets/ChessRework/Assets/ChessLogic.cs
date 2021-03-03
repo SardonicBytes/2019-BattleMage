@@ -138,15 +138,15 @@ public class Square
     {
         get
         {
-            if (obstacle != null) return false;
-            else if (!validTerrain) return false;
+            if (obstacle != null) return true;
+            else if (!validTerrain) return true;
             else if (spellEffect != null)
             {
                 if (spellEffect.ActAsObstacle())
-                    return false;
-                else return true;
+                    return true;
+                else return false;
             }
-            else return true;
+            else return false;
         }
 
     }

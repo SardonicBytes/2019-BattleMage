@@ -5,7 +5,6 @@ using System.Linq;
 
 [RequireComponent(typeof(ChessPlayerController))]
 [RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(Animator))]
 
 ///</summary> Intended to handle movement in the form of walking + running, 
 public class MovementController : MonoBehaviour
@@ -111,17 +110,14 @@ public class MovementController : MonoBehaviour
         return averageSteering;
     }
 
-    public float distanceMod;
-    public float angleMod;
-
     public Vector2 SteerForAvoidance(Vector3 spotToAvoid)
     {
 
         //Simple Garbage Version
-        distanceMod = Vector2.Distance(transform.position, spotToAvoid);
+        float distanceMod = Vector2.Distance(transform.position, spotToAvoid);
         distanceMod = Mathf.Max(avoidanceMaxDistance - distanceMod, 0);
 
-        angleMod = -Vector2.SignedAngle(moveDir, spotToAvoid - transform.position);
+        float angleMod = -Vector2.SignedAngle(moveDir, spotToAvoid - transform.position);
         angleMod = Mathf.Clamp(angleMod, -90, 90);
         angleMod = angleMod > 0 ? (angleMod - 90)/90 : (angleMod + 90)/90;
 

@@ -14,12 +14,12 @@ public class SpellEffect : MonoBehaviour
         UpdateIndex(boardVisuals.board, newIndex);
     }
 
-    public virtual bool MoveToThisPoint( Vector2Int index )
+    public virtual bool MoveToThisPoint( Vector2Int newIndex )
     {
         return false;
     }
 
-    public virtual bool MoveThisPiece( Vector2Int index )
+    public virtual bool MoveThisPiece( Vector2Int newStartIndex, Vector2Int newEndIndex)
     {
         return false;
     }
